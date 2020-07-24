@@ -1,9 +1,10 @@
 extends Node
 
-var score = 0
-var CanShoot = true
-var GerandoCabeca = true
-var Aranha = false
-var Conchinha = false
-var Cobrinha = false
-var CoguPlayerArea = 0
+onready var points : PackedScene = preload("res://Points.tscn")
+var score : int = 0
+var CanShoot : bool = true
+var GerandoCabeca : bool = true
+var Aranha : bool = false
+var Conchinha : bool = false
+var Cobrinha : bool = false
+var CoguPlayerArea : int = 0

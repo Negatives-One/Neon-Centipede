@@ -33,5 +33,3 @@ texture = ExtResource( 3 )
 texture_scale = 0.15
 energy = 0.9
 shadow_enabled = true
-
-[node name="Camera2D" type="Camera2D" parent="."]

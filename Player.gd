@@ -1,54 +1,31 @@
 extends KinematicBody2D
 
-var MoveVector = [0, 0]
-var motion = Vector2()
-const MoveSpeed = 256*2
-var bullet = preload("res://Bullet.tscn")
-var V
+var MoveVector : Vector2 = Vector2(0, 0)
+var motion : Vector2 = Vector2()
+const MoveSpeed : int = 256*2
+var bullet : PackedScene = preload("res://Bullet.tscn")
 
-func _physics_process(_delta):
+func _physics_process(_delta) -> void:
 	get_movedir()
-	Movimento()
+	motion = motion * MoveSpeed
 	Shoot()
-	V = move_and_slide(motion)
+	motion = move_and_slide(motion)
 
-
-func MoveVerticalInput():
-	if Input.is_action_pressed("ui_up"):
-		MoveVector[1] = -1
-	elif Input.is_action_pressed("ui_down"):
-		MoveVector[1] = 1
-	else:
-		MoveVector[1] = 0
-
-func MoveHorizontalInput():
-	if Input.is_action_pressed("ui_left"):
-		MoveVector[0] = -1
-	elif Input.is_action_pressed("ui_right"):
-		MoveVector[0] = 1
-	else:
-		MoveVector[0] = 0
-
-func get_movedir():
-	var LEFT = Input.is_action_pressed("ui_left")
-	var RIGHT = Input.is_action_pressed("ui_right")
-	var UP = Input.is_action_pressed("ui_up")
-	var DOWN = Input.is_action_pressed("ui_down")
+func get_movedir() -> void:
+	var LEFT : float = Input.get_action_strength("ui_left")
+	var RIGHT : float = Input.get_action_strength("ui_right")
+	var UP : float = Input.get_action_strength("ui_up")
+	var DOWN : float = Input.get_action_strength("ui_down")
 	
-	motion = Vector2(-int(LEFT) + int(RIGHT), -int(UP) + int(DOWN)).normalized()
+	motion = Vector2(-LEFT + RIGHT, -UP + DOWN).normalized()
 
-func Shoot():
+func Shoot() -> void:
 	if Input.is_action_pressed("Space"):
 		if help.CanShoot:
 			help.CanShoot = false
 			new_bullet()
 
-
-func new_bullet():
-	var new_bullet = bullet.instance()
+func new_bullet() -> void:
+	var new_bullet : Node = bullet.instance()
 	get_parent().call_deferred('add_child', new_bullet)
 	new_bullet.position = $Position2D.global_position
-
-
-func Movimento():
-	motion = motion * MoveSpeed
