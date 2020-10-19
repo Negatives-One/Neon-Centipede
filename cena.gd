@@ -107,7 +107,7 @@ func SpawnCobrinha() -> void:
 			PositionCobrinha = SpawnEsqTopo[randi() % len(SpawnEsqTopo)].global_position
 		elif lado == 1:
 			PositionCobrinha = SpawnDirTopo[randi() % len(SpawnDirTopo)].global_position
-		$Node/TimerCobra.set_wait_time(randi() % 2 + 1)
+		$Node/TimerCobra.set_wait_time(randi() % 8 + 5)
 		$Node/TimerCobra.start()
 		help.Cobrinha = true
 
