@@ -5,7 +5,10 @@ var motion : Vector2 = Vector2()
 var points : PackedScene = help.points
 
 func _ready() -> void:
-	dir = SelectDir()
+	if global_position.x < 300:
+		dir = 1
+	else:
+		dir = -1
 
 func _physics_process(delta) -> void:
 	SairDaTela()

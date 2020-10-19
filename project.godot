@@ -27,7 +27,6 @@ help="*res://help.gd"
 
 window/size/width=2072
 window/size/height=1216
-window/size/fullscreen=true
 window/size/test_width=1366
 window/size/test_height=768
 window/vsync/use_vsync=false

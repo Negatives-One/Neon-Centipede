@@ -5,12 +5,14 @@ var especial : bool = false
 #onready var Cogumelos : Array = $"..".get_children()
 var points : PackedScene = help.points
 
+var skin : String = "default"
+
 func _ready():
 	$AnimatedSprite.set_frame(vida)
 
-func _physics_process(_delta) -> void:
-	if especial == true:
-		self_modulate = Color(0, 0, 1, 1 )
+func especial() -> void:
+	especial = true
+	ChangeSkin("especial")
 
 func ShowPoints(quanto) -> void:
 	var text : Node = points.instance()
@@ -52,4 +54,11 @@ func Damage() -> void:
 		help.score += 1
 		ShowPoints(1)
 		queue_free()
+	$AnimatedSprite.set_frame(vida)
+
+func ChangeSkin(name : String):
+	skin = name
+	$AnimationPlayer.play("colors")
+	$AnimatedSprite.play(skin)
+	$AnimatedSprite.stop()
 	$AnimatedSprite.set_frame(vida)

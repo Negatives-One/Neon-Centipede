@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Cogumelo.gd" type="Script" id=1]
 [ext_resource path="res://Cogumelo1.png" type="Texture" id=2]
@@ -6,12 +6,21 @@
 [ext_resource path="res://Cogumelo2.png" type="Texture" id=4]
 [ext_resource path="res://Cogumelo0.png" type="Texture" id=5]
 [ext_resource path="res://GlobalLight.png" type="Texture" id=6]
+[ext_resource path="res://CogumeloEspecial0.png" type="Texture" id=7]
+[ext_resource path="res://CogumeloEspecial1.png" type="Texture" id=8]
+[ext_resource path="res://CogumeloEspecial2.png" type="Texture" id=9]
+[ext_resource path="res://CogumeloEspecial3.png" type="Texture" id=10]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ],
 "loop": true,
 "name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "especial",
 "speed": 5.0
 } ]
 
@@ -20,6 +29,23 @@ extents = Vector2( 22, 22 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 32, 32 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "colors"
+length = 3.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:self_modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 1, 0, 1 ), Color( 1, 1, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 1, 1 ), Color( 0, 0, 1, 1 ), Color( 0, 1, 1, 1 ) ]
+}
 
 [node name="Cogumelo" type="StaticBody2D" groups=[
 "Cogumelo",
@@ -36,9 +62,11 @@ frames = SubResource( 1 )
 frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
@@ -53,5 +81,8 @@ position = Vector2( 9.53674e-07, 4.76837e-07 )
 scale = Vector2( 2.12355, 3.61842 )
 texture = ExtResource( 6 )
 texture_scale = 0.01
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/colors = SubResource( 4 )
 [connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -13,10 +13,12 @@ var Cogumelos : Array
 
 onready var cogumelo : PackedScene = preload("res://Cogumelo.tscn")
 onready var Aranha : PackedScene = preload("res://Aranha.tscn")
-onready var ConchaObject : PackedScene	 = preload("res://conchinha.tscn")
+onready var ConchaObject : PackedScene = preload("res://conchinha.tscn")
+onready var CobrinhaObject : PackedScene = preload("res://Cobrinha.tscn")
 
 var PositionAranha : Vector2 = Vector2.ZERO
 var PositionConchinha : Vector2 = Vector2.ZERO
+var PositionCobrinha : Vector2 = Vector2.ZERO
 
 #18 blocos de altura
 #22 blocos de comprimento
@@ -34,6 +36,7 @@ func _process(_delta) -> void:
 	help.CoguPlayerArea = NumCoguPlayerArea()
 	SpawnAranha()
 	SpawnConchinha()
+	SpawnCobrinha()
 	cabecas = $Cabecas.get_children()
 	if Input.is_action_just_pressed("click"):
 		CreateCogu(Vector2(get_global_mouse_position().x - 32, get_global_mouse_position().y - 32))
@@ -71,11 +74,22 @@ func SpawnAranha() -> void:
 		var lado : int = randi() % 2
 		if lado == 0:
 			PositionAranha = SpawnEsqBaixo[randi() % len(SpawnEsqBaixo)].global_position
-		if lado == 1:
+		elif lado == 1:
 			PositionAranha = SpawnDirBaixo[randi() % len(SpawnDirBaixo)].global_position
 		$Node/TimerAranha.set_wait_time(randi() % 7 + 4)
 		$Node/TimerAranha.start()
 		help.Aranha = true
+
+func SpawnCobrinha() -> void:
+	if help.Cobrinha == false:
+		var lado : int = randi() % 2
+		if lado == 0:
+			PositionCobrinha = SpawnEsqTopo[randi() % len(SpawnEsqTopo)].global_position
+		elif lado == 1:
+			PositionCobrinha = SpawnDirTopo[randi() % len(SpawnDirTopo)].global_position
+		$Node/TimerCobra.set_wait_time(randi() % 2 + 1)
+		$Node/TimerCobra.start()
+		help.Cobrinha = true
 
 func SpawnConchinha() -> void:
 	if help.CoguPlayerArea <= 5:
@@ -110,6 +124,10 @@ func CreateConchinha() -> void:
 	$Inimigos.call_deferred('add_child', Concha)
 	Concha.global_position = pos
 
+func CreateCobrinha(pos : Vector2) -> void:
+	var cobrinha : Node = CobrinhaObject.instance()
+	$Inimigos.call_deferred('add_child', cobrinha)
+	cobrinha.global_position = pos
 
 
 func _on_TimerAranha_timeout() -> void:
@@ -118,3 +136,7 @@ func _on_TimerAranha_timeout() -> void:
 
 func _on_TimerConcha_timeout() -> void:
 	CreateConchinha()
+
+
+func _on_TimerCobra_timeout():
+	CreateCobrinha(PositionCobrinha)

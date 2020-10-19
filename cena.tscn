@@ -65,11 +65,13 @@ extents = Vector2( 32, 576 )
 
 [sub_resource type="Environment" id=10]
 background_mode = 4
+ambient_light_energy = 12.14
 dof_blur_near_distance = 8192.0
 glow_enabled = true
 glow_levels/2 = true
+glow_intensity = 1.3
 glow_blend_mode = 0
-glow_hdr_threshold = 1.2
+glow_hdr_threshold = 1.16
 glow_bicubic_upscale = true
 
 [sub_resource type="TileSet" id=11]
@@ -398,6 +400,7 @@ wait_time = 3.0
 one_shot = true
 
 [node name="TimerCobra" type="Timer" parent="Node"]
+one_shot = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 10 )
@@ -483,3 +486,4 @@ current = true
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="Node/TimerAranha" to="." method="_on_TimerAranha_timeout"]
 [connection signal="timeout" from="Node/TimerConcha" to="." method="_on_TimerConcha_timeout"]
+[connection signal="timeout" from="Node/TimerCobra" to="." method="_on_TimerCobra_timeout"]
