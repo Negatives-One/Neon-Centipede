@@ -15,11 +15,12 @@ func Summon() -> void:
 
 func _physics_process(_delta):
 	var mortos : Array = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+	print(mortos)
 	for j in range(len(self.get_children())):
 		if self.get_children()[j].vivo == false:
 			mortos[j] = 1
 
-	if soma(mortos) == tamanho:
+	if soma(mortos) == tamanho and $"../CabecasExtras".get_children().size() == 0:
 		mortos = zerar(mortos)
 		deleteDead()
 		Summon()

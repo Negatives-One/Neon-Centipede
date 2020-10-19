@@ -15,7 +15,6 @@ func _ready() -> void:
 		$Sprite.flip_h = false
 
 func _physics_process(delta) -> void:
-	print(Passados)
 	self.global_position.x += orien * speed * delta
 
 
@@ -43,6 +42,7 @@ func ShowPoints(quanto : int) -> void:
 func _on_VisibilityNotifier2D_screen_exited():
 	if(!killed):
 		for i in range(len(Passados)):
-			Passados[i].especial()
+			if is_instance_valid(Passados[i]):
+				Passados[i].especial()
 		help.Cobrinha = false
 		queue_free()

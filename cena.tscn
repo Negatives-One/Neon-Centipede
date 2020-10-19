@@ -220,6 +220,9 @@ energy = 0.6
 
 [node name="Cabecas" type="Node2D" parent="."]
 script = ExtResource( 5 )
+tamanho = 1
+
+[node name="CabecasExtras" type="Node2D" parent="."]
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
@@ -402,6 +405,9 @@ one_shot = true
 [node name="TimerCobra" type="Timer" parent="Node"]
 one_shot = true
 
+[node name="TimerCabecaExtra" type="Timer" parent="Node"]
+one_shot = true
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 10 )
 
@@ -455,6 +461,7 @@ energy = 0.8
 range_item_cull_mask = 2
 
 [node name="FPS" type="Label" parent="Control/Panel"]
+visible = false
 light_mask = 2
 material = SubResource( 12 )
 anchor_left = 1.0
@@ -487,3 +494,4 @@ current = true
 [connection signal="timeout" from="Node/TimerAranha" to="." method="_on_TimerAranha_timeout"]
 [connection signal="timeout" from="Node/TimerConcha" to="." method="_on_TimerConcha_timeout"]
 [connection signal="timeout" from="Node/TimerCobra" to="." method="_on_TimerCobra_timeout"]
+[connection signal="timeout" from="Node/TimerCabecaExtra" to="." method="_on_TimerCabecaExtra_timeout"]

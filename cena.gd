@@ -20,6 +20,9 @@ var PositionAranha : Vector2 = Vector2.ZERO
 var PositionConchinha : Vector2 = Vector2.ZERO
 var PositionCobrinha : Vector2 = Vector2.ZERO
 
+
+var MadnessTime : bool = false
+
 #18 blocos de altura
 #22 blocos de comprimento
 
@@ -129,6 +132,10 @@ func CreateCobrinha(pos : Vector2) -> void:
 	$Inimigos.call_deferred('add_child', cobrinha)
 	cobrinha.global_position = pos
 
+func CreateCabecaExtra(pos : Vector2) -> void:
+	
+	pass
+
 
 func _on_TimerAranha_timeout() -> void:
 	CreateAranha(PositionAranha)
@@ -140,3 +147,7 @@ func _on_TimerConcha_timeout() -> void:
 
 func _on_TimerCobra_timeout():
 	CreateCobrinha(PositionCobrinha)
+
+
+func _on_TimerCabecaExtra_timeout():
+	pass # Replace with function body.

@@ -14,52 +14,64 @@ var motion : Vector2 = Vector2()
 var MoveSpeed : int = 256
 export (int) var tamanho : int = 9
 
+var despencando : bool = false
+
 func _physics_process(delta) -> void:
 	skin()
 	if self.position.y <= 800:
+		$"../..".MadnessTime = true
 		subindo = false
 	if vivo == true:
-		rot()
-		movimento()
-		if facing == -1 and self.global_position.x < aux:
-			aux -= 64
-		elif facing == 1 and self.global_position.x > aux:
-			aux += 64
-		var collision = move_and_collide(motion*delta)
-		if collision != null:
-			var collider = collision.get_collider()
-			if collider.is_in_group('Parede'):
-				if facing == -1:
-					$Up.cast_to.y = -64
-					$UpSkin.cast_to.y = -10
-					$Down.cast_to.y = 64
-					$DownSkin.cast_to.y = 10
-					facing = 1
-				elif facing == 1:
-					$Up.cast_to.y = 64
-					$UpSkin.cast_to.y = 10
-					$Down.cast_to.y = -64
-					$DownSkin.cast_to.y = -10
-					facing = -1
-				if subindo == false:
-					if $Down.is_colliding():
-						var x = $Down.get_collider()
-						if x.is_in_group('Cogumelo'):
+		if despencando:
+			$Sprite.rotation = 1.5708
+			motion = Vector2(0, MoveSpeed)
+			var collision = move_and_collide(motion*delta)
+			if collision != null:
+				var collider = collision.get_collider()
+				if collider.is_in_group('Cogumelo'):
+					collider.passando()
+				elif collider.is_in_group('Parede'):
+					despencando = false
+				elif collider.is_in_group('Player'):
+					get_tree().reload_current_scene()
+		else:
+			rot()
+			movimento()
+			if facing == -1 and self.global_position.x < aux:
+				aux -= 64
+			elif facing == 1 and self.global_position.x > aux:
+				aux += 64
+			var collision = move_and_collide(motion*delta)
+			if collision != null:
+				var collider = collision.get_collider()
+				if collider.is_in_group('Parede'):
+					if collider.is_in_group('Cogumelo'):
+						if collider.especial == true:
+							despencando = true
+					facing *= -1
+					$Up.cast_to.y *= -1
+					$UpSkin.cast_to.y *= -1
+					$Down.cast_to.y *= -1
+					$DownSkin.cast_to.y *= -1
+					if subindo == false:
+						if $Down.is_colliding():
+							var x = $Down.get_collider()
+							if x.is_in_group('Cogumelo'):
+								x.passando()
+							if x.is_in_group('Sobe'):
+								subindo = true
+								self.global_position.y += -128
+								auy += -128
+						self.global_position.y += 64
+						auy += 64
+					else:
+						if $Up.is_colliding():
+							var x = $Up.get_collider()
 							x.passando()
-						if x.is_in_group('Sobe'):
-							subindo = true
-							self.global_position.y += -128
-							auy += -128
-					self.global_position.y += 64
-					auy += 64
-				else:
-					if $Up.is_colliding():
-						var x = $Up.get_collider()
-						x.passando()
-					self.global_position.y += -64
-					auy += -64
-			if collider.is_in_group('Player'):
-				get_tree().reload_current_scene()
+						self.global_position.y += -64
+						auy += -64
+				if collider.is_in_group('Player'):
+					get_tree().reload_current_scene()
 
 func movimento() -> void:
 	motion.x = facing * MoveSpeed
