@@ -8,15 +8,21 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player.gd"
+} ]
 _global_script_class_icons={
-
+"Player": ""
 }
 
 [application]
 
 config/name="centipede"
 run/main_scene="res://cena.tscn"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
 [autoload]
@@ -48,4 +54,5 @@ click={
 [rendering]
 
 quality/2d/use_pixel_snap=true
+quality/filters/msaa=1
 environment/default_environment="res://default_env.tres"

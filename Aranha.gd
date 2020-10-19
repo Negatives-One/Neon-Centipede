@@ -94,4 +94,4 @@ func _on_Area2D_body_entered(body) -> void:
 		body.queue_free()
 		morre()
 	if body.is_in_group('Player'):
-		get_tree().reload_current_scene()
+		help.DamagePlayer()

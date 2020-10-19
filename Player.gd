@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+class_name Player
+
 var MoveVector : Vector2 = Vector2(0, 0)
 var motion : Vector2 = Vector2()
 const MoveSpeed : int = 256*2

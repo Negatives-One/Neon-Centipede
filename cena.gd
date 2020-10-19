@@ -4,6 +4,7 @@ extends Node2D
 var only : bool = true
 var cabecas : Array
 var taVivo : Array = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+var vidasPlayer : int = 3
 onready var SpawnCima : Array = $Spawns/Topo.get_children()
 onready var SpawnDirTopo : Array = $Spawns/DireitaTopo.get_children()
 onready var SpawnDirBaixo : Array = $Spawns/DireitaBaixo.get_children()
@@ -15,6 +16,7 @@ onready var cogumelo : PackedScene = preload("res://Cogumelo.tscn")
 onready var Aranha : PackedScene = preload("res://Aranha.tscn")
 onready var ConchaObject : PackedScene = preload("res://conchinha.tscn")
 onready var CobrinhaObject : PackedScene = preload("res://Cobrinha.tscn")
+onready var ExtraCentipede : PackedScene = preload("res://ExtraCentipede.tscn")
 
 var PositionAranha : Vector2 = Vector2.ZERO
 var PositionConchinha : Vector2 = Vector2.ZERO
@@ -33,7 +35,23 @@ func _ready():
 	set_physics_process(false)
 
 func _process(_delta) -> void:
-	$Control/Panel/FPS.text = str(Performance.get_monitor(Performance.TIME_FPS))
+	$Control/Panel/FPS.text = str(MadnessTime)#Performance.get_monitor(Performance.TIME_FPS))
+	if help.vidaPlayer == 3:
+		$Control/Panel/Control/Sprite3.visible = true
+		$Control/Panel/Control/Sprite2.visible = true
+		$Control/Panel/Control/Sprite1.visible = true
+	elif help.vidaPlayer == 2:
+		$Control/Panel/Control/Sprite3.visible = false
+		$Control/Panel/Control/Sprite2.visible = true
+		$Control/Panel/Control/Sprite1.visible = true
+	elif help.vidaPlayer == 1:
+		$Control/Panel/Control/Sprite3.visible = false
+		$Control/Panel/Control/Sprite2.visible = false
+		$Control/Panel/Control/Sprite1.visible = true
+	elif help.vidaPlayer == 0:
+		$Control/Panel/Control/Sprite3.visible = false
+		$Control/Panel/Control/Sprite2.visible = false
+		$Control/Panel/Control/Sprite1.visible = false
 	score()
 	Cogumelos = $Cogumelos.get_children()
 	help.CoguPlayerArea = NumCoguPlayerArea()
@@ -41,12 +59,11 @@ func _process(_delta) -> void:
 	SpawnConchinha()
 	SpawnCobrinha()
 	cabecas = $Cabecas.get_children()
-	if Input.is_action_just_pressed("click"):
-		CreateCogu(Vector2(get_global_mouse_position().x - 32, get_global_mouse_position().y - 32))
 
 
 func score() -> void:
 	$Control/Panel/Pontuacao.set_text(String(help.score))
+
 
 func setMap() -> void:
 	var y : int = 32+64
@@ -133,8 +150,9 @@ func CreateCobrinha(pos : Vector2) -> void:
 	cobrinha.global_position = pos
 
 func CreateCabecaExtra(pos : Vector2) -> void:
-	
-	pass
+	var ECenti : Node = ExtraCentipede.instance()
+	$CabecasExtras.call_deferred('add_child', ECenti)
+	ECenti.global_position = pos
 
 
 func _on_TimerAranha_timeout() -> void:
@@ -150,4 +168,6 @@ func _on_TimerCobra_timeout():
 
 
 func _on_TimerCabecaExtra_timeout():
-	pass # Replace with function body.
+	if MadnessTime and $CabecasExtras.get_child_count() < 10:
+		var spots : Array = [$Spawns/EsquerdaBaixo/Position2D14, $Spawns/DireitaBaixo/Position2D14]
+		CreateCabecaExtra(spots[randi() % 2].global_position)

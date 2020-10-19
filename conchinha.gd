@@ -60,7 +60,7 @@ func verifica() -> void:
 					ShowPoints(200)
 					self.queue_free()
 			if i.is_in_group('Player'):
-				get_tree().reload_current_scene()
+				help.DamagePlayer()
 			if i.is_in_group('Cogumelo'):
 				PodeFazer = false
 				return

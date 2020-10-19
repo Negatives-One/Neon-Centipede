@@ -19,19 +19,20 @@ var despencando : bool = false
 func _physics_process(delta) -> void:
 	skin()
 	if self.position.y <= 800:
-		$"../..".MadnessTime = true
 		subindo = false
+	if self.global_position.y >= 1120:
+		$"../..".MadnessTime = true
 	if vivo == true:
 		if despencando:
-			$Sprite.rotation = 1.5708
+			if self.global_position.y >= 1120 + 32:
+				despencando = false
+			self.rotation = 1.5708
 			motion = Vector2(0, MoveSpeed)
 			var collision = move_and_collide(motion*delta)
 			if collision != null:
 				var collider = collision.get_collider()
 				if collider.is_in_group('Cogumelo'):
 					collider.passando()
-				elif collider.is_in_group('Parede'):
-					despencando = false
 				elif collider.is_in_group('Player'):
 					get_tree().reload_current_scene()
 		else:
@@ -67,14 +68,15 @@ func _physics_process(delta) -> void:
 					else:
 						if $Up.is_colliding():
 							var x = $Up.get_collider()
-							x.passando()
+							if x.is_in_group("Cogumelo"):
+								x.passando()
 						self.global_position.y += -64
 						auy += -64
 				if collider.is_in_group('Player'):
-					get_tree().reload_current_scene()
+					help.DamagePlayer()
 
 func movimento() -> void:
-	motion.x = facing * MoveSpeed
+	motion = Vector2(facing * MoveSpeed, 0)
 
 
 

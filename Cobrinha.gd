@@ -15,8 +15,13 @@ func _ready() -> void:
 		$Sprite.flip_h = false
 
 func _physics_process(delta) -> void:
+	SairDaTela()
 	self.global_position.x += orien * speed * delta
 
+func SairDaTela() -> void:
+	if self.global_position.x > 1540 or self.global_position.x < -132:
+		help.Aranha = false
+		queue_free()
 
 func _on_KinematicBody2D_body_entered(body):
 	if body.is_in_group('Bala'):

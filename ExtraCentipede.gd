@@ -10,13 +10,16 @@ var aux : int
 var auy : int = 64
 
 func _ready():
-	pass 
+	if global_position.x < 300:
+		facing = 1
+	else:
+		facing = -1
 
 func _physics_process(delta):
 	skin()
 	if self.position.y <= 800:
 		subindo = false
-	if self.position.x >= 32 or self.position.x <= 1376:
+	if self.global_position.x > 64 and self.global_position.x < 1376:
 		$CollisionShape2D.disabled = false
 	if vivo == true:
 		rot()
@@ -48,11 +51,12 @@ func _physics_process(delta):
 				else:
 					if $Up.is_colliding():
 						var x = $Up.get_collider()
-						x.passando()
+						if x.is_in_group('Cogumelo'):
+							x.passando()
 					self.global_position.y += -64
 					auy += -64
 			if collider.is_in_group('Player'):
-				get_tree().reload_current_scene()
+				help.DamagePlayer()
 
 func movimento() -> void:
 	motion.x = facing * MoveSpeed
