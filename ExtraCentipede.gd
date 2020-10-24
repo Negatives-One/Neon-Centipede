@@ -14,6 +14,7 @@ func _ready():
 		facing = 1
 	else:
 		facing = -1
+	auy = global_position.y
 
 func _physics_process(delta):
 	skin()

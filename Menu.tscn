@@ -1,17 +1,185 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Menu.gd" type="Script" id=1]
+[ext_resource path="res://Neon.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://GlobalLight.png" type="Texture" id=3]
+[ext_resource path="res://Untitled-1.png" type="Texture" id=4]
 
-[node name="Menu" type="Node"]
+[sub_resource type="DynamicFont" id=1]
+size = 250
+outline_color = Color( 1, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="CanvasItemMaterial" id=4]
+
+[sub_resource type="CanvasItemMaterial" id=5]
+
+[sub_resource type="Environment" id=2]
+background_mode = 4
+ambient_light_energy = 12.14
+dof_blur_near_distance = 8192.0
+glow_enabled = true
+glow_levels/2 = true
+glow_blend_mode = 0
+glow_hdr_threshold = 1.16
+glow_bicubic_upscale = true
+adjustment_enabled = true
+adjustment_saturation = 1.1
+
+[sub_resource type="Animation" id=3]
+resource_name = "pisca"
+length = 2.9
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Menu/Light2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.9, 0.8 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "color"
+length = 11.9
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Menu/Button/Control/Sprite:self_modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 3, 4.5, 6, 7.5, 9, 10.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 1, 1, 1 ), Color( 0, 0, 1, 1 ), Color( 0, 1, 0.490196, 1 ), Color( 0, 1, 0, 1 ), Color( 1, 1, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Menu/Button/Label:custom_colors/font_color")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.5, 3, 4.5, 6, 7.5, 9, 10.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 1, 1, 1 ), Color( 0, 0, 1, 1 ), Color( 0, 1, 0.490196, 1 ), Color( 0, 1, 0, 1 ), Color( 1, 1, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Menu/Label2:custom_colors/font_color")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.5, 3, 4.5, 6, 7.5, 9, 10.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 1, 1, 1 ), Color( 0, 0, 1, 1 ), Color( 0, 1, 0.490196, 1 ), Color( 0, 1, 0, 1 ), Color( 1, 1, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 1, 1 ) ]
+}
+
+[node name="Node2D" type="Node2D"]
+__meta__ = {
+"_edit_horizontal_guides_": [ 446.907, 844.69 ],
+"_edit_vertical_guides_": [ 578.802, 1577.26 ]
+}
+
+[node name="Menu" type="Control" parent="."]
+margin_right = 2072.0
+margin_bottom = 1216.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="Button" type="Button" parent="."]
-margin_left = 509.0
-margin_top = 492.0
-margin_right = 1424.0
-margin_bottom = 813.0
-text = "Play"
+[node name="ColorRect" type="ColorRect" parent="Menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1366.0
+margin_right = 1468.0
+color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+
+[node name="Label2" type="Label" parent="Menu"]
+anchor_right = 1.0
+margin_top = 85.0
+margin_bottom = 347.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0.0502036, 0.974406, 1 )
+text = "Neon Centipede"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="ColorRect" parent="Menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -457.0
+margin_top = -148.0
+margin_right = 549.0
+margin_bottom = 350.0
+color = Color( 1, 1, 1, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Menu/Button"]
+material = SubResource( 4 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0.0502036, 0.974406, 1 )
+text = "Play"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Menu/Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Menu/Button/Control"]
+self_modulate = Color( 0, 0.0502036, 0.974406, 1 )
+material = SubResource( 5 )
+position = Vector2( 498.987, 247.789 )
+scale = Vector2( 0.501013, 0.501013 )
+texture = ExtResource( 4 )
+
+[node name="Light2D" type="Light2D" parent="Menu"]
+position = Vector2( 1051.56, 495.865 )
+scale = Vector2( 0.918022, 0.714164 )
+texture = ExtResource( 3 )
+energy = 0.865057
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/pisca = SubResource( 3 )
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+anims/color = SubResource( 6 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 1036, 608 )
+current = true
